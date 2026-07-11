@@ -5,6 +5,7 @@ export default function GuildHall() {
   const [form, setForm] = useState({ name: '', email: '', type: 'Collaboration', message: '' })
   const [submitted, setSubmitted] = useState(false)
   const [raven, setRaven] = useState(false)
+  const [toast, setToast] = useState<'success' | 'error' | null>(null)
   const [sectionRef, inView] = useInView<HTMLElement>(0.2)
   const headingRef = useScrollReveal<HTMLDivElement>()
 
@@ -12,14 +13,31 @@ export default function GuildHall() {
     e.preventDefault()
     setRaven(true)
     try {
-      const res = await fetch(`https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_ID}`, {
+      const formId = import.meta.env.VITE_FORMSPREE_ID
+      if (!formId) {
+        console.error('VITE_FORMSPREE_ID is not set')
+        setToast('error')
+        setTimeout(() => setToast(null), 4000)
+        return
+      }
+      const res = await fetch(`https://formspree.io/f/${formId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({ name: form.name, email: form.email, type: form.type, message: form.message }),
       })
       if (res.ok) {
         setSubmitted(true)
+        setToast('success')
+        setTimeout(() => setToast(null), 5000)
+      } else {
+        console.error('Formspree error:', res.status, await res.text())
+        setToast('error')
+        setTimeout(() => setToast(null), 4000)
       }
+    } catch (err) {
+      console.error('Submit failed:', err)
+      setToast('error')
+      setTimeout(() => setToast(null), 4000)
     } finally {
       setRaven(false)
     }
@@ -142,6 +160,34 @@ export default function GuildHall() {
 
       </div>
 
+
+      {/* Toast popup */}
+      {toast && (
+        <div style={{
+          position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+          zIndex: 100, pointerEvents: 'none',
+          animation: 'toast-in 0.4s cubic-bezier(0.34,1.56,0.64,1)',
+        }}>
+          <style>{`@keyframes toast-in { from { opacity:0; transform:translate(-50%,-60%) scale(0.8); } to { opacity:1; transform:translate(-50%,-50%) scale(1); } }`}</style>
+          <div style={{
+            background: toast === 'success' ? 'rgba(10,30,20,0.97)' : 'rgba(30,10,10,0.97)',
+            border: `2px solid ${toast === 'success' ? 'var(--jade,#3ee8b5)' : '#FF3E3E'}`,
+            borderRadius: 8, padding: '28px 40px', textAlign: 'center',
+            boxShadow: `0 0 60px ${toast === 'success' ? 'rgba(62,232,181,0.3)' : 'rgba(255,62,62,0.3)'}`,
+          }}>
+            <div style={{ fontSize: 48, marginBottom: 12 }}>{toast === 'success' ? '🦅' : '⚠️'}</div>
+            <div className="font-cinzel" style={{
+              color: toast === 'success' ? 'var(--jade,#3ee8b5)' : '#FF3E3E',
+              fontSize: 16, letterSpacing: '0.2em', fontWeight: 700, marginBottom: 8,
+            }}>
+              {toast === 'success' ? 'RAVEN DISPATCHED!' : 'SEND FAILED'}
+            </div>
+            <div className="font-grotesk" style={{ color: 'rgba(246,241,255,0.7)', fontSize: 12 }}>
+              {toast === 'success' ? 'Your message is on its way. ✓' : 'Something went wrong. Try again.'}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Chapter label */}
       <div style={{ position: 'absolute', bottom: '2%', left: '5%', zIndex: 10 }}>
