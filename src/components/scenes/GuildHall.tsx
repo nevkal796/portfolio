@@ -118,21 +118,22 @@ export default function GuildHall() {
           )}
         </div>
 
-        {/* Social links */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 12 }}>
-          {[
-            { label: 'GitHub', href: 'https://github.com/nevkal796' },
-            { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nevin-kalloor-2b23412a5/' },
-          ].map(s => (
-            <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="font-mono-code" style={{
-              color: 'var(--amber)', fontSize: 10, padding: '4px 10px',
-              background: '#3B2418', border: '1px solid #8B6B44', borderRadius: 2,
-              textDecoration: 'none', letterSpacing: '0.1em',
-            }}>
-              {s.label}
-            </a>
-          ))}
-        </div>
+      </div>
+
+      {/* Social links — top right, clear of chapter label */}
+      <div style={{ position: 'absolute', top: '5%', right: '5%', display: 'flex', gap: 10, zIndex: 10 }}>
+        {[
+          { label: 'GitHub', href: 'https://github.com/nevkal796' },
+          { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nevin-kalloor-2b23412a5/' },
+        ].map(s => (
+          <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="font-mono-code" style={{
+            color: 'var(--amber)', fontSize: 10, padding: '4px 10px',
+            background: '#3B2418', border: '1px solid #8B6B44', borderRadius: 2,
+            textDecoration: 'none', letterSpacing: '0.1em',
+          }}>
+            {s.label}
+          </a>
+        ))}
       </div>
 
       {/* Chapter label */}
