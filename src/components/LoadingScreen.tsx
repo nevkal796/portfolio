@@ -50,7 +50,7 @@ export default function LoadingScreen({ onDone }: Props) {
       <div style={{ fontSize: 48, marginBottom: 8 }}>🌏</div>
 
       <div className="font-cinzel" style={{ color: 'var(--electric)', fontSize: 18, letterSpacing: '0.25em', textShadow: '0 0 20px var(--electric)' }}>
-        PIXEL DRIFTER
+        NEVIN KALLOOR
       </div>
 
       <div className="font-mono-code" style={{ color: 'var(--bone)', fontSize: 12, letterSpacing: '0.2em', height: 18 }}>
