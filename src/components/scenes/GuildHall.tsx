@@ -8,10 +8,21 @@ export default function GuildHall() {
   const [sectionRef, inView] = useInView<HTMLElement>(0.2)
   const headingRef = useScrollReveal<HTMLDivElement>()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setRaven(true)
-    setTimeout(() => { setSubmitted(true); setRaven(false) }, 1200)
+    try {
+      const res = await fetch(`https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ name: form.name, email: form.email, type: form.type, message: form.message }),
+      })
+      if (res.ok) {
+        setSubmitted(true)
+      }
+    } finally {
+      setRaven(false)
+    }
   }
 
   return (
@@ -110,8 +121,8 @@ export default function GuildHall() {
         {/* Social links */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 12 }}>
           {[
-            { label: 'GitHub', href: 'https://github.com' },
-            { label: 'LinkedIn', href: 'https://linkedin.com' },
+            { label: 'GitHub', href: 'https://github.com/nevkal796' },
+            { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nevin-kalloor-2b23412a5/' },
           ].map(s => (
             <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="font-mono-code" style={{
               color: 'var(--amber)', fontSize: 10, padding: '4px 10px',

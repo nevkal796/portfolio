@@ -26,6 +26,8 @@ jobs:
           cache-dependency-path: package-lock.json
       - run: npm ci
       - run: npm run build
+        env:
+          VITE_FORMSPREE_ID: ${{ vars.VITE_FORMSPREE_ID }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
