@@ -88,7 +88,7 @@ export default function GuildHall() {
           ) : (
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <FormField label="Traveler's Name" type="text" value={form.name} onChange={v => setForm(f => ({ ...f, name: v }))} placeholder="Your name..." required />
-              <FormField label="Raven's Destination" type="email" value={form.email} onChange={v => setForm(f => ({ ...f, email: v }))} placeholder="your@email.com" required />
+              <FormField label="Your Contact (email / phone)" type="text" value={form.email} onChange={v => setForm(f => ({ ...f, email: v }))} placeholder="email or phone number..." required />
               <div>
                 <label className="font-grotesk" style={{ color: 'var(--ink-text)', fontSize: 11, display: 'block', marginBottom: 4 }}>Quest Type</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
