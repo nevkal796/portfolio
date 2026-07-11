@@ -65,6 +65,28 @@ export default function GuildHall() {
         <div className="font-grotesk" style={{ color: '#FFB34788', fontSize: 10, letterSpacing: '0.2em', marginTop: 3 }}>LEAVE A MESSAGE · DISPATCH A RAVEN</div>
       </div>
 
+      {/* GitHub button — left of form */}
+      <a href="https://github.com/nevkal796" target="_blank" rel="noreferrer"
+        style={{
+          position: 'absolute', top: '50%', left: 'calc(50% - 340px)', transform: 'translateY(-50%)',
+          zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
+          textDecoration: 'none', opacity: inView ? 1 : 0, transition: 'opacity 0.6s',
+        }}>
+        <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#3B2418', border: '2px solid #8B6B44', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, boxShadow: '0 0 20px rgba(139,107,68,0.3)' }}>🐙</div>
+        <span className="font-cinzel" style={{ color: 'var(--amber)', fontSize: 11, letterSpacing: '0.15em' }}>GITHUB</span>
+      </a>
+
+      {/* LinkedIn button — right of form */}
+      <a href="https://www.linkedin.com/in/nevin-kalloor-2b23412a5/" target="_blank" rel="noreferrer"
+        style={{
+          position: 'absolute', top: '50%', left: 'calc(50% + 280px)', transform: 'translateY(-50%)',
+          zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
+          textDecoration: 'none', opacity: inView ? 1 : 0, transition: 'opacity 0.6s',
+        }}>
+        <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#3B2418', border: '2px solid #8B6B44', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, boxShadow: '0 0 20px rgba(139,107,68,0.3)' }}>🔗</div>
+        <span className="font-cinzel" style={{ color: 'var(--amber)', fontSize: 11, letterSpacing: '0.15em' }}>LINKEDIN</span>
+      </a>
+
       {/* Contact form — parchment */}
       <div style={{
         position: 'absolute', top: '14%', left: '50%', transform: 'translateX(-50%)',
@@ -120,21 +142,6 @@ export default function GuildHall() {
 
       </div>
 
-      {/* Social links — top right, clear of chapter label */}
-      <div style={{ position: 'absolute', top: '5%', right: '5%', display: 'flex', gap: 10, zIndex: 10 }}>
-        {[
-          { label: 'GitHub', href: 'https://github.com/nevkal796' },
-          { label: 'LinkedIn', href: 'https://www.linkedin.com/in/nevin-kalloor-2b23412a5/' },
-        ].map(s => (
-          <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="font-mono-code" style={{
-            color: 'var(--amber)', fontSize: 10, padding: '4px 10px',
-            background: '#3B2418', border: '1px solid #8B6B44', borderRadius: 2,
-            textDecoration: 'none', letterSpacing: '0.1em',
-          }}>
-            {s.label}
-          </a>
-        ))}
-      </div>
 
       {/* Chapter label */}
       <div style={{ position: 'absolute', bottom: '2%', left: '5%', zIndex: 10 }}>
