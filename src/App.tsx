@@ -86,7 +86,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matc
 
 export default function App() {
   return (
-    <BrowserRouter basename="/pixel-portfolio">
+    <BrowserRouter basename="/portfolio">
       {!reducedMotion && <CustomCursor />}
       <Routes>
         <Route path="/" element={<WorldView />} />
