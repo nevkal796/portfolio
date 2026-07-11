@@ -1,0 +1,12 @@
+{
+  "name": "Nevin Kalloor",
+  "classTitle": "Honors CS Student",
+  "origin": "Houston · Texas A&M",
+  "age": 20,
+  "hp": 84,
+  "mp": 92,
+  "expCurrent": 6,
+  "expTotal": 8,
+  "bio": "A wandering codewright who builds things that shouldn't exist and debugs the ones that do — pipelines, dashboards, distributed systems, whatever the quest calls for. Currently grinding the trials of data structures and algorithms to prove worthy of the next guild.",
+  "traits": ["data-driven", "designer", "curious", "builder", "systems-thinker", "night-owl"]
+}

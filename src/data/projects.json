@@ -1,0 +1,123 @@
+[
+  {
+    "id": "rateguard",
+    "questNumber": 1,
+    "title": "RateGuard — Distributed Rate Limiter",
+    "difficulty": 4,
+    "status": "COMPLETED",
+    "description": "A serverless rate-limiting API built on AWS Lambda and DynamoDB — any application can check whether a client is within their request quota, enforced atomically across distributed instances.",
+    "techTags": ["AWS Lambda", "DynamoDB", "API Gateway", "Python", "k6"],
+    "githubUrl": "https://github.com/nevkal796/rateguard",
+    "featured": true,
+    "sortOrder": 1,
+    "detail": {
+      "problem": "Distributed systems have a classic problem: when multiple servers handle requests for the same client simultaneously, naive rate limiting lets more requests through than intended. This quest was about building a rate limiter that stays correct even when the read/check/increment happens concurrently across many Lambda instances.",
+      "approach": "Exposed a single REST endpoint (POST /check) through API Gateway, backed by a Lambda function and DynamoDB for shared state. Implemented two selectable algorithms — a Sliding Window Counter for strict, predictable enforcement, and a Token Bucket for burst-tolerant traffic — so callers can match the algorithm to their traffic pattern. The core correctness fix was using DynamoDB's ConditionExpression to make the increment-and-check operation atomic, closing the race condition where two Lambda instances could both read count=9 and both let a request through.",
+      "trials": "The hardest part wasn't the happy path — it was proving the race condition actually existed and then proving the fix actually closed it. Load testing at real concurrency was the only way to validate the atomic-write fix held under simultaneous traffic rather than just working in a single-threaded test.",
+      "findings": "Load tested with k6 at 100 concurrent virtual users over 2 minutes: 374 req/s throughput, p95 latency of 79ms, p99 under 100ms, across 44,981 total requests — all on AWS free tier at effectively $0 cost.",
+      "stack": ["AWS Lambda (Python 3.12)", "AWS DynamoDB (on-demand)", "AWS API Gateway (HTTP API)", "AWS CloudWatch (logs + custom dashboard)", "k6 load testing"],
+      "links": [{ "label": "GitHub", "url": "https://github.com/nevkal796/rateguard" }]
+    }
+  },
+  {
+    "id": "earnings-drift",
+    "questNumber": 2,
+    "title": "Earnings Call Sentiment Drift Tracker",
+    "difficulty": 5,
+    "status": "COMPLETED",
+    "description": "A research pipeline testing whether executive language in SEC 8-K filings — hedging, sentiment, readability — predicts what happens to the stock afterward.",
+    "techTags": ["Python", "FinBERT", "Pandas", "PostgreSQL", "Plotly Dash"],
+    "githubUrl": "https://github.com/nevkal796/earnings-drift",
+    "demoUrl": "https://earnings-drift.onrender.com/",
+    "featured": true,
+    "sortOrder": 2,
+    "detail": {
+      "problem": "Do executives tip their hand before bad news? This project set out to test whether measurable linguistic features in earnings press releases — hedging frequency, sentiment, readability, and numeric specificity — carry any predictive signal about a stock's subsequent movement.",
+      "approach": "Built an ingestion pipeline pulling SEC 8-K filings via the EDGAR API into Neon Postgres, then ran each filing through FinBERT (ProsusAI/finbert) for sentiment, plus custom lexicon-based scorers for hedging language, uncertainty language, numeric specificity, and a Gunning Fog readability index. Correlated each feature against 30/60/90-day forward returns pulled via yfinance using Spearman rank correlation, then surfaced everything through a Plotly Dash dashboard with headline, explore, and findings tabs.",
+      "trials": "The honest challenge was sample size — with dozens of filings rather than thousands, cross-company patterns are easy to overstate. The finding only became credible after checking whether it held up at the individual-company level too, not just in the pooled dataset, which is what separates a real signal from noise that happens to correlate.",
+      "findings": "The standout result: numeric specificity in a filing correlates negatively with 30-day forward returns — more precise numbers precede lower returns, consistent with executives anchoring expectations downward ahead of a miss. For Apple specifically, elevated hedging language showed a strong negative correlation with returns, while positive FinBERT sentiment showed a strong positive one.",
+      "stack": ["Python", "SEC EDGAR API", "BeautifulSoup", "Neon (serverless Postgres)", "Hugging Face Transformers (FinBERT)", "pandas", "scipy (Spearman correlation)", "yfinance", "Plotly Dash", "Render (hosting)"],
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/nevkal796/earnings-drift" },
+        { "label": "Live Dashboard", "url": "https://earnings-drift.onrender.com/" }
+      ]
+    }
+  },
+  {
+    "id": "aggieseek",
+    "questNumber": 3,
+    "title": "AggieSeek",
+    "difficulty": 3,
+    "status": "IN_PROGRESS",
+    "description": "A student-built platform connecting directly into Texas A&M's Howdy registration system, giving students real-time visibility into class section availability.",
+    "techTags": ["REST API", "TypeScript", "Node.js"],
+    "featured": true,
+    "sortOrder": 3,
+    "detail": {
+      "problem": "Texas A&M students register for classes through a system called Howdy, which doesn't make it easy to track section availability in real time. As an API Developer for the Aggie Coding Club, this project's job was to close that gap.",
+      "approach": "Engineered a REST API integration connecting AggieSeek directly into Howdy, enabling real-time monitoring across more than 100,000 class sections. The integration handles the parsing and normalization work needed to turn Howdy's data into something students can act on quickly during registration windows.",
+      "trials": "Working against a university system that wasn't designed to be integrated with means handling data that doesn't always come back in a predictable shape, and building around a system you don't control and can't ask to change.",
+      "findings": "The platform now supports 2,000+ active users monitoring 100,000+ class sections in real time — a meaningful chunk of the student body relying on it during registration.",
+      "stack": ["REST API integration", "Howdy registration system"],
+      "links": []
+    }
+  },
+  {
+    "id": "zeropoint",
+    "questNumber": 4,
+    "title": "Zeropoint",
+    "difficulty": 4,
+    "status": "IN_PROGRESS",
+    "description": "A wheelchair transportation management platform for airlines — built with a small team to close the gap between passengers, ticketing staff, and ground crews.",
+    "techTags": ["React Native", "Node.js", "PostgreSQL", "OpenAI"],
+    "featured": true,
+    "sortOrder": 4,
+    "detail": {
+      "problem": "Wheelchair users flying commercially depend on airline staff correctly capturing and relaying their equipment's specs — weight, dimensions, battery type — to ground crews. Miscommunication here causes real delays and real risk to expensive mobility equipment. Zeropoint set out to make that handoff accurate and fast.",
+      "approach": "Built as a team, with a React Native + Expo mobile app on the client side and a Node.js + Express backend handling REST APIs, JWT auth, and Google OAuth via Passport.js. Data lives in PostgreSQL through Prisma ORM. The most technically interesting piece is the AI layer: OpenAI's Whisper transcribes spoken wheelchair specifications, and GPT-4 structures that transcription into clean, standardized data the airline can act on, instead of a passenger filling out a rigid form.",
+      "trials": "Turning a messy, spoken description of a wheelchair into structured data reliable enough for ground crews to use required real testing against how people naturally describe their equipment — not the tidy way a form assumes they will.",
+      "findings": "A working end-to-end pipeline: voice input → Whisper transcription → GPT-4 structuring → stored specification, backed by file storage on AWS S3 for supporting documents or photos.",
+      "stack": ["React Native + Expo (TypeScript)", "Expo Router", "Node.js + Express (TypeScript)", "JWT Authentication", "Passport.js (Google OAuth)", "PostgreSQL", "Prisma ORM", "OpenAI Whisper", "OpenAI GPT-4", "AWS S3"],
+      "links": []
+    }
+  },
+  {
+    "id": "prime-aroma",
+    "questNumber": 5,
+    "title": "Prime Aroma",
+    "difficulty": 3,
+    "status": "COMPLETED",
+    "description": "A full-stack e-commerce platform built solo for a small business founder — real products, real payments, now running independently.",
+    "techTags": ["Next.js", "Supabase", "Stripe", "NextAuth"],
+    "githubUrl": "https://github.com/nevkal796/Prime-Aroma",
+    "featured": true,
+    "sortOrder": 5,
+    "detail": {
+      "problem": "A non-technical founder needed a real storefront for a cologne-decant business — not a template, an actual production site with real payment processing she could run herself afterward.",
+      "approach": "Scoped requirements directly with the founder, then built the whole thing solo: a Next.js frontend, Supabase for the database and backend services, Stripe for live payment processing, and NextAuth for authentication. Deployed to Vercel.",
+      "trials": "The technical build was the easy part — the real constraint was building something a non-technical person could operate independently after handoff, without needing to come back for every small change.",
+      "findings": "Shipped a live storefront listing 50+ products with functioning checkout, now run independently by the founder with no ongoing involvement needed.",
+      "stack": ["Next.js", "Supabase", "Stripe", "NextAuth", "Framer Motion", "Vercel"],
+      "links": [{ "label": "GitHub", "url": "https://github.com/nevkal796/Prime-Aroma" }]
+    }
+  },
+  {
+    "id": "multi-agent-research-pipeline",
+    "questNumber": 6,
+    "title": "Autonomous Multi-Agent Research Pipeline",
+    "difficulty": 5,
+    "status": "IN_PROGRESS",
+    "description": "A 6-agent system that takes a single research question and autonomously plans, researches, analyzes, and writes up a finished memo — no human in the loop.",
+    "techTags": ["Anthropic API", "FastAPI", "Redis", "Next.js"],
+    "featured": true,
+    "sortOrder": 6,
+    "detail": {
+      "problem": "Most 'AI agent' demos are a single model calling a couple of tools. This project's goal was to test something harder: can a set of specialized agents actually hand off work to each other reliably, end to end, from a single natural-language research goal to a finished, cited output?",
+      "approach": "Built around a blackboard architecture — a shared Redis workspace representing the current state of a research run. Agents never call each other directly; each one reads the current workspace state, does its job, writes results back, and yields, with an orchestrator deciding which agent runs next. Six specialized agents cover the pipeline: Planner (structures the research plan), Research (web search + data APIs), Data (cleans and normalizes retrieved data, flags quality issues), Analysis (writes and executes Python via an E2B sandbox to run real statistical analysis), plus review and memo-generation stages.",
+      "trials": "The failure mode this architecture is designed to avoid is agents silently disagreeing about state — one agent assuming data is clean when another hasn't finished validating it. Making every agent read and write through one shared, auditable workspace instead of calling each other directly was the fix, since it means every step of a run can be replayed from the workspace log to see exactly what each agent saw and did.",
+      "findings": "A working autonomous pipeline that takes one natural-language prompt and produces a fully-cited research memo without manual intervention at any step in between — with the entire run auditable afterward via the workspace state log.",
+      "stack": ["Next.js (Vercel)", "FastAPI (Render)", "Anthropic API (Claude, tool use)", "Redis Cloud (shared blackboard)", "Neon Postgres", "E2B (sandboxed code execution)", "WeasyPrint (PDF generation)", "GitHub REST API", "WebSockets"],
+      "links": []
+    }
+  }
+]

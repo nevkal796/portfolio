@@ -1,0 +1,12 @@
+@import '@fontsource/cinzel/700.css';
+@import '@fontsource/cinzel/900.css';
+@import '@fontsource/vt323/400.css';
+@import '@fontsource/space-grotesk/400.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+.font-cinzel     { font-family: 'Cinzel', serif; }
+.font-vt323      { font-family: 'VT323', monospace; }
+.font-grotesk    { font-family: 'Space Grotesk', sans-serif; }
+.font-mono-code  { font-family: 'JetBrains Mono', monospace; }
