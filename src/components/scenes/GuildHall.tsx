@@ -6,6 +6,7 @@ export default function GuildHall() {
   const [submitted, setSubmitted] = useState(false)
   const [raven, setRaven] = useState(false)
   const [toast, setToast] = useState<'success' | 'error' | null>(null)
+  const [toastMsg, setToastMsg] = useState('')
   const [sectionRef, inView] = useInView<HTMLElement>(0.2)
   const headingRef = useScrollReveal<HTMLDivElement>()
 
@@ -15,7 +16,7 @@ export default function GuildHall() {
     try {
       const formId = import.meta.env.VITE_FORMSPREE_ID
       if (!formId) {
-        console.error('VITE_FORMSPREE_ID is not set')
+        setToastMsg('Form ID not configured.')
         setToast('error')
         setTimeout(() => setToast(null), 4000)
         return
@@ -30,14 +31,15 @@ export default function GuildHall() {
         setToast('success')
         setTimeout(() => setToast(null), 5000)
       } else {
-        console.error('Formspree error:', res.status, await res.text())
+        const body = await res.text()
+        setToastMsg(`HTTP ${res.status}: ${body}`)
         setToast('error')
-        setTimeout(() => setToast(null), 4000)
+        setTimeout(() => setToast(null), 6000)
       }
     } catch (err) {
-      console.error('Submit failed:', err)
+      setToastMsg(err instanceof Error ? err.message : String(err))
       setToast('error')
-      setTimeout(() => setToast(null), 4000)
+      setTimeout(() => setToast(null), 6000)
     } finally {
       setRaven(false)
     }
@@ -187,8 +189,8 @@ export default function GuildHall() {
             }}>
               {toast === 'success' ? 'RAVEN DISPATCHED!' : 'SEND FAILED'}
             </div>
-            <div className="font-grotesk" style={{ color: 'rgba(246,241,255,0.7)', fontSize: 12 }}>
-              {toast === 'success' ? 'Your message is on its way. ✓' : 'Something went wrong. Try again.'}
+            <div className="font-grotesk" style={{ color: 'rgba(246,241,255,0.7)', fontSize: 12, whiteSpace: 'pre-wrap', wordBreak: 'break-word', maxWidth: 280 }}>
+              {toast === 'success' ? 'Your message is on its way. ✓' : `Something went wrong. Try again.\n\n${toastMsg}`}
             </div>
           </div>
         </div>
