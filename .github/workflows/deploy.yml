@@ -28,6 +28,7 @@ jobs:
       - run: npm run build
         env:
           VITE_FORMSPREE_ID: ${{ vars.VITE_FORMSPREE_ID }}
+          VITE_ADMIN_PASSWORD: ${{ vars.VITE_ADMIN_PASSWORD }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
