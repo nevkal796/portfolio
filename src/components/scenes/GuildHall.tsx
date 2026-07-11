@@ -122,8 +122,13 @@ export default function GuildHall() {
           {submitted ? (
             <div style={{ textAlign: 'center', padding: '20px 0' }}>
               <div style={{ fontSize: 32, marginBottom: 8 }}>🦅</div>
-              <div className="font-cinzel" style={{ color: 'var(--jade)', fontSize: 12, letterSpacing: '0.1em' }}>Raven dispatched.</div>
-              <div className="font-grotesk" style={{ color: 'var(--ink-text)', fontSize: 11, marginTop: 4 }}>Expect a reply within 3 sunsets.</div>
+              <div className="font-cinzel" style={{ color: 'var(--jade)', fontSize: 12, letterSpacing: '0.1em' }}>Message received.</div>
+              <div className="font-grotesk" style={{ color: 'var(--ink-text)', fontSize: 11, marginTop: 4, marginBottom: 16 }}>Your words have reached the guild.</div>
+              <button onClick={() => { setSubmitted(false); setForm({ name: '', email: '', type: 'Collaboration', message: '' }) }}
+                className="font-cinzel"
+                style={{ background: 'transparent', border: '1px solid #8B6B44', color: 'var(--amber)', padding: '7px 18px', fontSize: 10, letterSpacing: '0.15em', cursor: 'pointer', borderRadius: 3 }}>
+                ✉ SEND ANOTHER
+              </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
