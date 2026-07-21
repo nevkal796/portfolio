@@ -10,6 +10,7 @@ import QuestLog from './components/scenes/QuestLog'
 import SkillTree from './components/scenes/SkillTree'
 import Chronicles from './components/scenes/Chronicles'
 import GuildHall from './components/scenes/GuildHall'
+import OnboardingPopup from './components/OnboardingPopup'
 import QuestArchive from './components/quest-archive/QuestArchive'
 import QuestDetail from './components/scenes/QuestDetail'
 import AdminLogin from './components/admin/AdminLogin'
@@ -71,6 +72,7 @@ function WorldView() {
 
   return (
     <div>
+      <OnboardingPopup />
       <HUD progress={progress} muted={muted} onToggleMute={toggleMute} showScrollHint sceneIds={SCENE_IDS} />
       <ScrollRig onProgress={handleProgress}>
         <SpawnPoint />

@@ -202,7 +202,7 @@ export default function Village() {
 
       {/* Chapter label */}
       <div style={{ position: 'absolute', bottom: '7%', right: '5%', zIndex: 10, textAlign: 'right' }}>
-        <div className="font-cinzel" style={{ fontSize: 'clamp(12px, 1.5vw, 18px)', fontWeight: 700, letterSpacing: '0.25em', color: 'var(--paper)', textTransform: 'uppercase' }}>THE VILLAGE</div>
+        <div className="font-cinzel theme-label" data-plain="About Me" style={{ fontSize: 'clamp(12px, 1.5vw, 18px)', fontWeight: 700, letterSpacing: '0.25em', color: 'var(--paper)', textTransform: 'uppercase' }}>THE VILLAGE</div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 8, marginTop: 4 }}>
           <span className="font-grotesk" style={{ color: '#FFB347', fontSize: 11, letterSpacing: '0.15em' }}>Chapter II</span>
           <div style={{ width: 24, height: 1, background: '#FFB347' }} />

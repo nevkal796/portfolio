@@ -187,6 +187,35 @@ body {
   50%       { transform: translateX(8%) scaleX(0.88) skewX(3deg); opacity: 1; }
 }
 
+/* ============ Theme tooltips (Option A) ============ */
+.theme-label {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+.theme-label::after {
+  content: attr(data-plain);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(11,10,20,0.92);
+  border: 1px solid rgba(92,225,255,0.3);
+  color: rgba(92,225,255,0.9);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 3px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.theme-label:hover::after {
+  opacity: 1;
+}
+
 /* ============ Mobile ============ */
 @media (max-width: 768px) {
   html, body { cursor: auto; }

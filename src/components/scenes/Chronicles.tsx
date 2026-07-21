@@ -143,7 +143,7 @@ export default function Chronicles() {
 
       {/* Chapter label */}
       <div style={{ position: 'absolute', bottom: '3%', left: '4%', zIndex: 10 }}>
-        <div className="font-cinzel" style={{ fontSize: 'clamp(12px, 1.5vw, 18px)', fontWeight: 700, letterSpacing: '0.35em', color: 'rgba(243,231,200,0.9)', textTransform: 'uppercase' }}>Chronicles</div>
+        <div className="font-cinzel theme-label" data-plain="Experience" style={{ fontSize: 'clamp(12px, 1.5vw, 18px)', fontWeight: 700, letterSpacing: '0.35em', color: 'rgba(243,231,200,0.9)', textTransform: 'uppercase' }}>Chronicles</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
           <div style={{ width: 32, height: 1, background: 'var(--electric)' }} />
           <span className="font-mono-code" style={{ color: 'rgba(92,225,255,0.8)', fontSize: 10, letterSpacing: '0.3em' }}>CHAPTER · III</span>

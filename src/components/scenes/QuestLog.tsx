@@ -104,7 +104,7 @@ export default function QuestLog() {
 
       {/* Chapter label */}
       <div style={{ position: 'absolute', bottom: '2%', left: '5%', zIndex: 10 }}>
-        <div className="font-cinzel" style={{ fontSize: 'clamp(12px, 1.5vw, 18px)', fontWeight: 700, letterSpacing: '0.25em', color: 'var(--paper)', textTransform: 'uppercase' }}>QUEST LOG</div>
+        <div className="font-cinzel theme-label" data-plain="Projects" style={{ fontSize: 'clamp(12px, 1.5vw, 18px)', fontWeight: 700, letterSpacing: '0.25em', color: 'var(--paper)', textTransform: 'uppercase' }}>QUEST LOG</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 3 }}>
           <div style={{ width: 24, height: 1, background: '#FF9A4D' }} />
           <span className="font-grotesk" style={{ color: '#FF9A4D', fontSize: 11, letterSpacing: '0.15em' }}>Chapter IV</span>

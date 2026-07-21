@@ -4,6 +4,7 @@ import { useProfile } from '../../lib/useLiveData'
 import { useIsMobile } from '../../lib/useIsMobile'
 
 const SCENES = ['SPAWN', 'VILLAGE', 'CHRONICLES', 'QUESTS', 'SKILLS', 'GUILD']
+const PLAIN_LABELS = ['Home', 'About', 'Experience', 'Projects', 'Skills', 'Contact']
 
 interface Props {
   progress: number
@@ -66,14 +67,14 @@ export default function HUD({ progress, muted, onToggleMute, showScrollHint, sce
       {/* Bottom center minimap */}
       <div className="hud-panel" style={{ position: 'fixed', bottom: 14, left: '50%', transform: 'translateX(-50%)', zIndex: 50, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
         <div className="font-cinzel" style={{ color: 'var(--electric)', fontSize: 9, letterSpacing: '0.2em' }}>
-          {SCENES[activeScene]}
+          {PLAIN_LABELS[activeScene]}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {SCENES.map((name, i) => (
             <button
               key={name}
               onClick={() => jumpToScene(i)}
-              title={name}
+              title={PLAIN_LABELS[i]}
               style={{
                 width: i === activeScene ? 10 : 8,
                 height: i === activeScene ? 10 : 8,

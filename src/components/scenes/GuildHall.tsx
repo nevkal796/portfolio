@@ -205,7 +205,7 @@ export default function GuildHall() {
 
       {/* Chapter label */}
       <div style={{ position: 'absolute', bottom: '2%', left: '5%', zIndex: 10 }}>
-        <div className="font-cinzel" style={{ fontSize: 'clamp(12px, 1.5vw, 18px)', fontWeight: 700, letterSpacing: '0.25em', color: 'var(--paper)', textTransform: 'uppercase' }}>GUILD HALL</div>
+        <div className="font-cinzel theme-label" data-plain="Contact" style={{ fontSize: 'clamp(12px, 1.5vw, 18px)', fontWeight: 700, letterSpacing: '0.25em', color: 'var(--paper)', textTransform: 'uppercase' }}>GUILD HALL</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 3 }}>
           <div style={{ width: 24, height: 1, background: '#FF6A3D' }} />
           <span className="font-grotesk" style={{ color: '#FF6A3D', fontSize: 11, letterSpacing: '0.15em' }}>Chapter VI</span>
