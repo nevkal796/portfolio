@@ -1,12 +1,17 @@
 {
   "name": "Nevin Kalloor",
   "classTitle": "Honors CS Student",
-  "origin": "Houston · Texas A&M",
+  "origin": "Houston, TX",
   "age": 20,
   "hp": 84,
   "mp": 92,
   "expCurrent": 6,
   "expTotal": 8,
-  "bio": "A wandering codewright who builds things that shouldn't exist and debugs the ones that do — pipelines, dashboards, distributed systems, whatever the quest calls for. Currently grinding the trials of data structures and algorithms to prove worthy of the next guild.",
+  "school": "Texas A&M University",
+  "major": "Computer Science — Honors",
+  "graduation": "Class of 2028",
+  "bio": "I build things that actually get used — from a distributed rate limiter handling hundreds of requests per second to a live e-commerce platform for a small business owner. I care about the intersection of performance, data, and real-world impact.",
+  "currently": "Interning at Pantex · Always building something on the side",
+  "interests": ["🏀 Basketball", "🎤 Singing", "🎵 Music Mixing", "👔 Fashion", "🧴 Cologne"],
   "traits": ["data-driven", "designer", "curious", "builder", "systems-thinker", "night-owl"]
 }

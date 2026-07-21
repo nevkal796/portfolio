@@ -1,5 +1,3 @@
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
 import { useProfile } from '../../lib/useLiveData'
 import { Character } from '../Character'
 import { useInView } from '../../lib/useScrollReveal'
@@ -26,20 +24,6 @@ export default function Village() {
   const profile = useProfile()
   const isMobile = useIsMobile()
   const [sectionRef, inView] = useInView<HTMLElement>(0.25)
-  const hpRef = useRef<HTMLDivElement>(null)
-  const mpRef = useRef<HTMLDivElement>(null)
-  const expRef = useRef<HTMLDivElement>(null)
-  const animated = useRef(false)
-
-  // Fire GSAP bars once when section scrolls into view
-  useEffect(() => {
-    if (inView && !animated.current) {
-      animated.current = true
-      gsap.fromTo(hpRef.current, { width: '0%' }, { width: `${profile.hp}%`, duration: 1.2, delay: 0.3, ease: 'power2.out' })
-      gsap.fromTo(mpRef.current, { width: '0%' }, { width: `${profile.mp}%`, duration: 1.2, delay: 0.5, ease: 'power2.out' })
-      gsap.fromTo(expRef.current, { width: '0%' }, { width: `${(profile.expCurrent / profile.expTotal) * 100}%`, duration: 1.2, delay: 0.7, ease: 'power2.out' })
-    }
-  }, [inView, profile])
 
   return (
     <section ref={sectionRef} id="scene-village" style={{
@@ -172,24 +156,46 @@ export default function Village() {
         maxWidth: isMobile ? 420 : undefined,
       }}>
         <div className="parchment-card" style={{ width: isMobile ? '100%' : 320, padding: '22px 26px' }}>
-          <div style={{ display: 'flex', gap: 12, marginBottom: 14 }}>
-            <div style={{ width: 60, height: 60, border: '2px solid var(--ink-text)', flexShrink: 0, background: 'var(--haze)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26 }}>🧑‍💻</div>
+          {/* Name + emoji */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+            <div style={{ width: 52, height: 52, border: '2px solid #8B6B44', flexShrink: 0, background: '#f0e2c0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, borderRadius: 3 }}>🧑‍💻</div>
             <div>
-              <div className="font-cinzel" style={{ color: 'var(--ink-text)', fontWeight: 700, fontSize: 14 }}>{profile.name}</div>
-              <div className="font-grotesk" style={{ color: '#5c3a1e', fontSize: 10, marginTop: 2 }}>Class: {profile.classTitle}</div>
-              {profile.origin && <div className="font-grotesk" style={{ color: '#5c3a1e', fontSize: 10 }}>{profile.origin}{profile.age ? ` · Age ${profile.age}` : ''}</div>}
+              <div className="font-cinzel" style={{ color: 'var(--ink-text)', fontWeight: 700, fontSize: 15, lineHeight: 1.1 }}>{profile.name}</div>
+              <div className="font-grotesk" style={{ color: '#5c3a1e', fontSize: 10, marginTop: 3 }}>{(profile as any).origin}</div>
             </div>
           </div>
-          <div style={{ borderTop: '1px solid #8B6B44', marginBottom: 10 }} />
-          <StatBar label="HP" value={profile.hp} max={100} color="var(--jade)" barRef={hpRef} />
-          <StatBar label="MP" value={profile.mp} max={100} color="var(--violet)" barRef={mpRef} />
-          <StatBar label="EXP" sublabel={`Semester ${profile.expCurrent}/${profile.expTotal}`} value={profile.expCurrent} max={profile.expTotal} color="var(--amber)" barRef={expRef} displayText={`${profile.expCurrent}/${profile.expTotal}`} />
-          <div style={{ borderTop: '1px solid #8B6B44', margin: '10px 0' }} />
-          <p className="font-grotesk" style={{ color: 'var(--ink-text)', fontSize: 11, lineHeight: 1.6 }}>{profile.bio}</p>
-          <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 5 }}>
-            {profile.traits.map(t => (
-              <span key={t} className="font-mono-code" style={{ background: '#8B6B4422', border: '1px solid #8B6B44', color: 'var(--ink-text)', fontSize: 9, padding: '2px 7px', borderRadius: 2 }}>[{t}]</span>
-            ))}
+
+          <div style={{ borderTop: '1px solid #8B6B4466', marginBottom: 10 }} />
+
+          {/* School */}
+          <div style={{ marginBottom: 10 }}>
+            <div className="font-mono-code" style={{ color: '#8B6B44', fontSize: 9, letterSpacing: '0.2em', marginBottom: 5 }}>— GUILD —</div>
+            <div className="font-grotesk" style={{ color: 'var(--ink-text)', fontSize: 11, fontWeight: 600 }}>{(profile as any).school}</div>
+            <div className="font-grotesk" style={{ color: '#5c3a1e', fontSize: 10 }}>{(profile as any).major}</div>
+            <div className="font-grotesk" style={{ color: '#5c3a1e', fontSize: 10 }}>{(profile as any).graduation}</div>
+          </div>
+
+          <div style={{ borderTop: '1px solid #8B6B4466', marginBottom: 10 }} />
+
+          {/* Bio */}
+          <div style={{ marginBottom: 10 }}>
+            <div className="font-mono-code" style={{ color: '#8B6B44', fontSize: 9, letterSpacing: '0.2em', marginBottom: 5 }}>— ABOUT —</div>
+            <p className="font-grotesk" style={{ color: 'var(--ink-text)', fontSize: 11, lineHeight: 1.65 }}>{profile.bio}</p>
+            {(profile as any).currently && (
+              <p className="font-grotesk" style={{ color: '#5c3a1e', fontSize: 10, marginTop: 6, fontStyle: 'italic' }}>{(profile as any).currently}</p>
+            )}
+          </div>
+
+          <div style={{ borderTop: '1px solid #8B6B4466', marginBottom: 10 }} />
+
+          {/* Interests */}
+          <div>
+            <div className="font-mono-code" style={{ color: '#8B6B44', fontSize: 9, letterSpacing: '0.2em', marginBottom: 6 }}>— OUTSIDE THE DUNGEON —</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+              {((profile as any).interests as string[]).map((t: string) => (
+                <span key={t} className="font-grotesk" style={{ background: '#8B6B4418', border: '1px solid #8B6B4466', color: 'var(--ink-text)', fontSize: 10, padding: '3px 8px', borderRadius: 2 }}>{t}</span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -206,25 +212,6 @@ export default function Village() {
   )
 }
 
-function StatBar({ label, sublabel, value, max, color, barRef, displayText }: {
-  label: string; sublabel?: string; value: number; max: number; color: string;
-  barRef: React.RefObject<HTMLDivElement | null>; displayText?: string
-}) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-      <div style={{ width: 36, flexShrink: 0 }}>
-        <span className="font-vt323" style={{ color: 'var(--ink-text)', fontSize: 16, display: 'block', lineHeight: 1 }}>{label}</span>
-        {sublabel && <span className="font-mono-code" style={{ color: '#8B6B44', fontSize: 8, display: 'block', lineHeight: 1.2, marginTop: 1 }}>{sublabel}</span>}
-      </div>
-      <div style={{ flex: 1, height: 10, background: '#3A2A18', borderRadius: 2, overflow: 'hidden' }}>
-        <div ref={barRef} style={{ height: '100%', background: color, borderRadius: 2, width: 0, boxShadow: `0 0 6px ${color}` }} />
-      </div>
-      <span className="font-vt323" style={{ color: 'var(--ink-text)', fontSize: 16, width: 50, textAlign: 'right' }}>
-        {displayText ?? `${value}/${max}`}
-      </span>
-    </div>
-  )
-}
 
 function Lanterns() {
   const lanterns = [
