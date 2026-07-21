@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProfile } from '../../lib/useLiveData'
 
-const SCENES = ['SPAWN', 'VILLAGE', 'QUESTS', 'SKILLS', 'GUILD']
+const SCENES = ['SPAWN', 'VILLAGE', 'CHRONICLES', 'QUESTS', 'SKILLS', 'GUILD']
 
 interface Props {
   progress: number
@@ -15,7 +15,7 @@ interface Props {
 export default function HUD({ progress, muted, onToggleMute, showScrollHint, sceneIds }: Props) {
   const profile = useProfile()
   const navigate = useNavigate()
-  const activeScene = Math.min(Math.floor(progress * 5), 4)
+  const activeScene = Math.min(Math.floor(progress * 6), 5)
   const [hasScrolled, setHasScrolled] = useState(false)
 
   useEffect(() => {

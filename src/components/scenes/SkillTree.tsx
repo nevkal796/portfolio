@@ -122,7 +122,7 @@ export default function SkillTree() {
 
       {/* Header */}
       <div ref={headingRef} className="reveal reveal--fade" style={{ position: 'absolute', top: 28, left: '50%', transform: 'translateX(-50%)', textAlign: 'center', zIndex: 10 }}>
-        <div className="font-mono-code" style={{ fontSize: 11, letterSpacing: '0.4em', color: 'rgba(92,225,255,0.65)', textTransform: 'uppercase' }}>— Chapter IV —</div>
+        <div className="font-mono-code" style={{ fontSize: 11, letterSpacing: '0.4em', color: 'rgba(92,225,255,0.65)', textTransform: 'uppercase' }}>— Chapter V —</div>
         <div className="font-cinzel" style={{ fontSize: 'clamp(22px,3.5vw,38px)', letterSpacing: '0.15em', color: 'var(--paper)', textTransform: 'uppercase', marginTop: 4, textShadow: '0 0 24px #5CE1FF, 0 0 60px rgba(92,225,255,0.3)' }}>
           Skill Tree
         </div>
@@ -191,7 +191,7 @@ export default function SkillTree() {
         <div className="font-cinzel" style={{ fontSize: 'clamp(12px, 1.5vw, 18px)', fontWeight: 700, letterSpacing: '0.25em', color: 'var(--electric)', textTransform: 'uppercase', textShadow: '0 0 12px var(--electric)' }}>SKILL TREE</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 3 }}>
           <div style={{ width: 24, height: 1, background: '#7A4BFF' }} />
-          <span className="font-mono-code" style={{ color: '#7A4BFF', fontSize: 11, letterSpacing: '0.15em' }}>Chapter IV</span>
+          <span className="font-mono-code" style={{ color: '#7A4BFF', fontSize: 11, letterSpacing: '0.15em' }}>Chapter V</span>
         </div>
       </div>
     </section>

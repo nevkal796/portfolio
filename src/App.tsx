@@ -8,13 +8,14 @@ import SpawnPoint from './components/scenes/SpawnPoint'
 import Village from './components/scenes/Village'
 import QuestLog from './components/scenes/QuestLog'
 import SkillTree from './components/scenes/SkillTree'
+import Chronicles from './components/scenes/Chronicles'
 import GuildHall from './components/scenes/GuildHall'
 import QuestArchive from './components/quest-archive/QuestArchive'
 import QuestDetail from './components/scenes/QuestDetail'
 import AdminLogin from './components/admin/AdminLogin'
 import AdminDashboard from './components/admin/AdminDashboard'
 
-const SCENE_IDS = ['scene-spawn', 'scene-village', 'scene-quests', 'scene-skills', 'scene-guild']
+const SCENE_IDS = ['scene-spawn', 'scene-village', 'scene-chronicles', 'scene-quests', 'scene-skills', 'scene-guild']
 
 function WorldView() {
   const [progress, setProgress] = useState(0)
@@ -38,7 +39,7 @@ function WorldView() {
     if (!loaded || scrolledToScene.current) return
     const scene = searchParams.get('scene')
     if (!scene) return
-    const idx = ['spawn','village','quests','skills','guild'].indexOf(scene)
+    const idx = ['spawn','village','chronicles','quests','skills','guild'].indexOf(scene)
     if (idx < 0) return
     scrolledToScene.current = true
     setTimeout(() => {
@@ -74,6 +75,7 @@ function WorldView() {
       <ScrollRig onProgress={handleProgress}>
         <SpawnPoint />
         <Village />
+        <Chronicles />
         <QuestLog />
         <SkillTree />
         <GuildHall />

@@ -104,7 +104,7 @@ export default function QuestLog() {
         <div className="font-cinzel" style={{ fontSize: 'clamp(12px, 1.5vw, 18px)', fontWeight: 700, letterSpacing: '0.25em', color: 'var(--paper)', textTransform: 'uppercase' }}>QUEST LOG</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 3 }}>
           <div style={{ width: 24, height: 1, background: '#FF9A4D' }} />
-          <span className="font-grotesk" style={{ color: '#FF9A4D', fontSize: 11, letterSpacing: '0.15em' }}>Chapter III</span>
+          <span className="font-grotesk" style={{ color: '#FF9A4D', fontSize: 11, letterSpacing: '0.15em' }}>Chapter IV</span>
         </div>
       </div>
     </section>
