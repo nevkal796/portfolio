@@ -117,9 +117,12 @@ export default function Chronicles() {
 
       {/* Timeline */}
       <div style={{
-        position: 'absolute', top: '28%', left: '50%', transform: 'translateX(-50%)',
+        position: 'absolute', top: '28%', bottom: '8%', left: '50%', transform: 'translateX(-50%)',
         width: 'min(820px, 90vw)', zIndex: 10,
         opacity: inView ? 1 : 0, transition: 'opacity 0.7s',
+        overflowY: 'auto', paddingRight: 8,
+        scrollbarWidth: 'thin',
+        scrollbarColor: 'rgba(92,225,255,0.3) transparent',
       }}>
         {/* Rune spine */}
         <div style={{
