@@ -187,7 +187,16 @@ body {
   50%       { transform: translateX(8%) scaleX(0.88) skewX(3deg); opacity: 1; }
 }
 
-/* Mobile fallback */
+/* ============ Mobile ============ */
 @media (max-width: 768px) {
   html, body { cursor: auto; }
+
+  /* HUD — shrink player card */
+  .hud-panel { padding: 6px 8px; }
+
+  /* Parchment cards — ensure they don't overflow */
+  .parchment-card { max-width: 100%; }
+
+  /* Quest cards — full width */
+  .quest-card { width: 100% !important; }
 }

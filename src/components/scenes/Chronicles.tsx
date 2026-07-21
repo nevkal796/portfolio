@@ -136,7 +136,7 @@ export default function Chronicles() {
           backgroundImage: 'repeating-linear-gradient(180deg, transparent 0px 22px, rgba(92,225,255,0.6) 22px 23px)',
         }} />
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 40, paddingTop: 20 }}>
           {ENTRIES.map((e, i) => <ChronicleRow key={i} entry={e} index={i} />)}
         </div>
       </div>
@@ -180,8 +180,9 @@ function ChronicleRow({ entry: e, index }: { entry: Entry; index: number }) {
 
       {/* Parchment card */}
       <div className="parchment-card" style={{
-        flex: 1, padding: '24px 28px',
+        flex: 1, padding: '20px 16px',
         transform: `rotate(${index % 2 === 0 ? -0.4 : 0.4}deg)`,
+        overflow: 'visible',
       }}>
         {/* Corner nails */}
         {(['top-left', 'top-right', 'bottom-left', 'bottom-right'] as const).map(pos => (

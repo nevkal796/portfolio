@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { useProfile } from '../../lib/useLiveData'
 import { Character } from '../Character'
 import { useInView } from '../../lib/useScrollReveal'
+import { useIsMobile } from '../../lib/useIsMobile'
 
 const BLOSSOMS = Array.from({ length: 22 }, (_, i) => ({
   id: i,
@@ -23,6 +24,7 @@ const FIREFLIES = Array.from({ length: 10 }, (_, i) => ({
 
 export default function Village() {
   const profile = useProfile()
+  const isMobile = useIsMobile()
   const [sectionRef, inView] = useInView<HTMLElement>(0.25)
   const hpRef = useRef<HTMLDivElement>(null)
   const mpRef = useRef<HTMLDivElement>(null)
@@ -147,23 +149,29 @@ export default function Village() {
         }} />
       ))}
 
-      {/* Character */}
-      <div style={{
-        position: 'absolute', bottom: '8%', left: '59%', transform: 'translateX(-50%)', zIndex: 8,
-        filter: 'drop-shadow(0 0 18px rgba(255,180,80,0.4))',
-        opacity: inView ? 1 : 0, transition: 'opacity 0.8s 0.3s',
-      }}>
-        <Character scale={1.1} />
-      </div>
+      {/* Character — hidden on mobile to avoid overlap */}
+      {!isMobile && (
+        <div style={{
+          position: 'absolute', bottom: '8%', left: '59%', transform: 'translateX(-50%)', zIndex: 8,
+          filter: 'drop-shadow(0 0 18px rgba(255,180,80,0.4))',
+          opacity: inView ? 1 : 0, transition: 'opacity 0.8s 0.3s',
+        }}>
+          <Character scale={1.1} />
+        </div>
+      )}
 
       {/* Parchment character sheet */}
       <div style={{
-        position: 'absolute', top: '50%', left: '5%',
-        transform: 'translateY(-50%)',
+        position: 'absolute',
+        top: isMobile ? '10%' : '50%',
+        left: isMobile ? '50%' : '5%',
+        transform: isMobile ? 'translateX(-50%)' : 'translateY(-50%)',
         zIndex: 10,
         opacity: inView ? 1 : 0, transition: 'opacity 0.6s',
+        width: isMobile ? 'calc(100vw - 32px)' : undefined,
+        maxWidth: isMobile ? 420 : undefined,
       }}>
-        <div className="parchment-card" style={{ width: 320, padding: '22px 26px' }}>
+        <div className="parchment-card" style={{ width: isMobile ? '100%' : 320, padding: '22px 26px' }}>
           <div style={{ display: 'flex', gap: 12, marginBottom: 14 }}>
             <div style={{ width: 60, height: 60, border: '2px solid var(--ink-text)', flexShrink: 0, background: 'var(--haze)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26 }}>🧑‍💻</div>
             <div>

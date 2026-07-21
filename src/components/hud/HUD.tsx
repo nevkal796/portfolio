@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useProfile } from '../../lib/useLiveData'
+import { useIsMobile } from '../../lib/useIsMobile'
 
 const SCENES = ['SPAWN', 'VILLAGE', 'CHRONICLES', 'QUESTS', 'SKILLS', 'GUILD']
 
@@ -15,6 +16,7 @@ interface Props {
 export default function HUD({ progress, muted, onToggleMute, showScrollHint, sceneIds }: Props) {
   const profile = useProfile()
   const navigate = useNavigate()
+  const isMobile = useIsMobile()
   const activeScene = Math.min(Math.floor(progress * 6), 5)
   const [hasScrolled, setHasScrolled] = useState(false)
 
@@ -30,22 +32,24 @@ export default function HUD({ progress, muted, onToggleMute, showScrollHint, sce
     <>
       {/* Top-left player card */}
       <div className="hud-panel" style={{ position: 'fixed', top: 14, left: 14, zIndex: 50 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div className="portrait-frame">
             <div className="portrait-blink" />
           </div>
-          <div>
-            <div className="font-cinzel" style={{ color: 'var(--paper)', fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              {profile.name}
+          {!isMobile && (
+            <div>
+              <div className="font-cinzel" style={{ color: 'var(--paper)', fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                {profile.name}
+              </div>
+              <div className="font-vt323" style={{ color: 'var(--violet)', fontSize: 16, lineHeight: 1 }}>
+                LVL 3 · {profile.classTitle}
+              </div>
+              <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
+                <MiniBar value={profile.hp} max={100} color="var(--jade)" label="HP" />
+                <MiniBar value={profile.mp} max={100} color="var(--violet)" label="MP" />
+              </div>
             </div>
-            <div className="font-vt323" style={{ color: 'var(--violet)', fontSize: 16, lineHeight: 1 }}>
-              LVL 3 · {profile.classTitle}
-            </div>
-            <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
-              <MiniBar value={profile.hp} max={100} color="var(--jade)" label="HP" />
-              <MiniBar value={profile.mp} max={100} color="var(--violet)" label="MP" />
-            </div>
-          </div>
+          )}
         </div>
       </div>
 

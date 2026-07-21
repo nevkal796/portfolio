@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useScrollReveal, useInView } from '../../lib/useScrollReveal'
+import { useIsMobile } from '../../lib/useIsMobile'
 
 export default function GuildHall() {
   const [form, setForm] = useState({ name: '', email: '', type: 'Collaboration', message: '' })
@@ -9,6 +10,7 @@ export default function GuildHall() {
   const [toastMsg, setToastMsg] = useState('')
   const [sectionRef, inView] = useInView<HTMLElement>(0.2)
   const headingRef = useScrollReveal<HTMLDivElement>()
+  const isMobile = useIsMobile()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -85,32 +87,24 @@ export default function GuildHall() {
         <div className="font-grotesk" style={{ color: '#FFB34788', fontSize: 10, letterSpacing: '0.2em', marginTop: 3 }}>LEAVE A MESSAGE · DISPATCH A RAVEN</div>
       </div>
 
-      {/* GitHub button — left of form */}
-      <a href="https://github.com/nevkal796" target="_blank" rel="noreferrer"
-        style={{
-          position: 'absolute', top: '50%', left: 'calc(50% - 340px)', transform: 'translateY(-50%)',
-          zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-          textDecoration: 'none', opacity: inView ? 1 : 0, transition: 'opacity 0.6s',
-        }}>
-        <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#3B2418', border: '2px solid #8B6B44', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, boxShadow: '0 0 20px rgba(139,107,68,0.3)' }}>🐙</div>
-        <span className="font-cinzel" style={{ color: 'var(--amber)', fontSize: 11, letterSpacing: '0.15em' }}>GITHUB</span>
-      </a>
-
-      {/* LinkedIn button — right of form */}
-      <a href="https://www.linkedin.com/in/nevin-kalloor-2b23412a5/" target="_blank" rel="noreferrer"
-        style={{
-          position: 'absolute', top: '50%', left: 'calc(50% + 280px)', transform: 'translateY(-50%)',
-          zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-          textDecoration: 'none', opacity: inView ? 1 : 0, transition: 'opacity 0.6s',
-        }}>
-        <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#3B2418', border: '2px solid #8B6B44', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, boxShadow: '0 0 20px rgba(139,107,68,0.3)' }}>🔗</div>
-        <span className="font-cinzel" style={{ color: 'var(--amber)', fontSize: 11, letterSpacing: '0.15em' }}>LINKEDIN</span>
-      </a>
+      {/* Desktop: GitHub left, LinkedIn right */}
+      {!isMobile && <>
+        <a href="https://github.com/nevkal796" target="_blank" rel="noreferrer"
+          style={{ position: 'absolute', top: '50%', left: 'calc(50% - 340px)', transform: 'translateY(-50%)', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, textDecoration: 'none', opacity: inView ? 1 : 0, transition: 'opacity 0.6s' }}>
+          <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#3B2418', border: '2px solid #8B6B44', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, boxShadow: '0 0 20px rgba(139,107,68,0.3)' }}>🐙</div>
+          <span className="font-cinzel" style={{ color: 'var(--amber)', fontSize: 11, letterSpacing: '0.15em' }}>GITHUB</span>
+        </a>
+        <a href="https://www.linkedin.com/in/nevin-kalloor-2b23412a5/" target="_blank" rel="noreferrer"
+          style={{ position: 'absolute', top: '50%', left: 'calc(50% + 280px)', transform: 'translateY(-50%)', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, textDecoration: 'none', opacity: inView ? 1 : 0, transition: 'opacity 0.6s' }}>
+          <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#3B2418', border: '2px solid #8B6B44', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 28, boxShadow: '0 0 20px rgba(139,107,68,0.3)' }}>🔗</div>
+          <span className="font-cinzel" style={{ color: 'var(--amber)', fontSize: 11, letterSpacing: '0.15em' }}>LINKEDIN</span>
+        </a>
+      </>}
 
       {/* Contact form — parchment */}
       <div style={{
-        position: 'absolute', top: '14%', left: '50%', transform: 'translateX(-50%)',
-        zIndex: 10, width: 360,
+        position: 'absolute', top: isMobile ? '10%' : '14%', left: '50%', transform: 'translateX(-50%)',
+        zIndex: 10, width: isMobile ? 'calc(100vw - 32px)' : 360, maxWidth: 420,
         opacity: inView ? 1 : 0, transition: 'opacity 0.6s',
       }}>
         <div className="parchment-card" style={{ padding: '20px 24px' }}>
@@ -165,8 +159,21 @@ export default function GuildHall() {
           )}
         </div>
 
+        {/* Mobile: social links below form */}
+        {isMobile && (
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 14 }}>
+            {[
+              { label: '🐙 GITHUB', href: 'https://github.com/nevkal796' },
+              { label: '🔗 LINKEDIN', href: 'https://www.linkedin.com/in/nevin-kalloor-2b23412a5/' },
+            ].map(s => (
+              <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="font-cinzel" style={{
+                color: 'var(--amber)', fontSize: 11, padding: '8px 16px', letterSpacing: '0.12em',
+                background: '#3B2418', border: '1px solid #8B6B44', borderRadius: 3, textDecoration: 'none',
+              }}>{s.label}</a>
+            ))}
+          </div>
+        )}
       </div>
-
 
       {/* Toast popup */}
       {toast && (
