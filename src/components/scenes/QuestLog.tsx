@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useProjects } from '../../lib/useLiveData'
 import { useScrollReveal, useInView } from '../../lib/useScrollReveal'
+import { useIsMobile } from '../../lib/useIsMobile'
 import type { Project } from '../../data/types'
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -26,10 +27,12 @@ const STATUS_STYLE: Record<Project['status'], { color: string; bg: string }> = {
 export default function QuestLog() {
   const projects = useProjects()
   const navigate = useNavigate()
+  const isMobile = useIsMobile()
   const headingRef = useScrollReveal<HTMLDivElement>()
   const [cardsRef, cardsVisible] = useInView<HTMLDivElement>(0.1)
   const signRef = useScrollReveal<HTMLDivElement>()
-  const featured = projects.filter(p => p.featured).sort((a, b) => a.sortOrder - b.sortOrder).slice(0, 3)
+  const sorted = projects.filter(p => p.featured).sort((a, b) => a.sortOrder - b.sortOrder)
+  const featured = isMobile ? sorted.slice(0, 1) : sorted.slice(0, 3)
 
   return (
     <section id="scene-quests" style={{
@@ -74,13 +77,13 @@ export default function QuestLog() {
 
       {/* Quest cards */}
       <div ref={cardsRef} style={{
-        position: 'absolute', top: '17%', left: '11%', right: '11%', bottom: '20%',
+        position: 'absolute', top: isMobile ? '15%' : '17%', left: '11%', right: '11%', bottom: '20%',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         gap: 20, zIndex: 10,
         opacity: cardsVisible ? 1 : 0, transition: 'opacity 0.6s',
       }}>
         {featured.map((p, i) => (
-          <QuestCard key={p.id} project={p} rotateOffset={[-2.5, 0.5, -1.5][i % 3]} index={i} />
+          <QuestCard key={p.id} project={p} rotateOffset={isMobile ? 0 : [-2.5, 0.5, -1.5][i % 3]} index={i} isMobile={isMobile} />
         ))}
       </div>
 
@@ -111,7 +114,7 @@ export default function QuestLog() {
   )
 }
 
-function QuestCard({ project: p, rotateOffset, index }: { project: Project; rotateOffset: number; index: number }) {
+function QuestCard({ project: p, rotateOffset, index, isMobile }: { project: Project; rotateOffset: number; index: number; isMobile?: boolean }) {
   const navigate = useNavigate()
   const status = STATUS_STYLE[p.status]
   return (
@@ -119,8 +122,8 @@ function QuestCard({ project: p, rotateOffset, index }: { project: Project; rota
       onClick={() => navigate(`/quests/${p.id}`, { state: { from: '/' } })}
       style={{
         flex: '0 0 auto',
-        width: 'clamp(200px, 26vw, 300px)',
-        minHeight: 380,
+        width: isMobile ? 'min(300px, 80vw)' : 'clamp(200px, 26vw, 300px)',
+        minHeight: isMobile ? 'auto' : 380,
         background: 'var(--paper)',
         borderRadius: 3,
         position: 'relative',
