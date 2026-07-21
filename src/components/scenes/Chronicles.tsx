@@ -15,20 +15,6 @@ interface Entry {
 
 const ENTRIES: Entry[] = [
   {
-    org: 'CREATOR CAMP',
-    role: 'Lead Instructor',
-    period: 'June 2025 — August 2025',
-    location: 'Montrose, TX',
-    tag: 'COMPLETED',
-    tagColor: 'var(--amber)',
-    sigil: 'CC',
-    bullets: [
-      'Led a team of 5 instructors teaching coding and technology to 200+ K–8 students across a full summer program.',
-      'Taught Struckd game development and video editing software, guiding young creators from zero to finished projects.',
-    ],
-    tech: ['Struckd', 'Video Editing', 'Curriculum Design', 'Team Leadership'],
-  },
-  {
     org: 'PANTEX CORPORATION',
     role: 'Data Analyst · Apprentice of Numbers',
     period: 'May 2025 — Present',
@@ -42,6 +28,20 @@ const ENTRIES: Entry[] = [
       'Weaving an executive Tableau dashboard bound to live sources — real-time KPIs and trends for directors and senior leadership.',
     ],
     tech: ['Python', 'scikit-learn', 'Pandas', 'Tableau', 'SQL'],
+  },
+  {
+    org: 'CREATOR CAMP',
+    role: 'Lead Instructor',
+    period: 'June 2025 — August 2025',
+    location: 'Montrose, TX',
+    tag: 'COMPLETED',
+    tagColor: 'var(--amber)',
+    sigil: 'CC',
+    bullets: [
+      'Led a team of 5 instructors teaching coding and technology to 200+ K–8 students across a full summer program.',
+      'Taught Struckd game development and video editing software, guiding young creators from zero to finished projects.',
+    ],
+    tech: ['Struckd', 'Video Editing', 'Curriculum Design', 'Team Leadership'],
   },
 ]
 
