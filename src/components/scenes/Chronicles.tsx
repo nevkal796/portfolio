@@ -15,6 +15,20 @@ interface Entry {
 
 const ENTRIES: Entry[] = [
   {
+    org: 'CREATOR CAMP',
+    role: 'Lead Instructor',
+    period: 'June 2025 — August 2025',
+    location: 'Montrose, TX',
+    tag: 'COMPLETED',
+    tagColor: 'var(--amber)',
+    sigil: 'CC',
+    bullets: [
+      'Led a team of 5 instructors teaching coding and technology to 200+ K–8 students across a full summer program.',
+      'Taught Struckd game development and video editing software, guiding young creators from zero to finished projects.',
+    ],
+    tech: ['Struckd', 'Video Editing', 'Curriculum Design', 'Team Leadership'],
+  },
+  {
     org: 'PANTEX CORPORATION',
     role: 'Data Analyst · Apprentice of Numbers',
     period: 'May 2025 — Present',
