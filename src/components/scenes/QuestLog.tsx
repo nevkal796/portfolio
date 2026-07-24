@@ -80,10 +80,9 @@ export default function QuestLog() {
         position: 'absolute', top: isMobile ? '15%' : '17%', left: '11%', right: '11%', bottom: '20%',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         gap: 20, zIndex: 10,
-        opacity: cardsVisible ? 1 : 0, transition: 'opacity 0.6s',
       }}>
         {featured.map((p, i) => (
-          <QuestCard key={p.id} project={p} rotateOffset={isMobile ? 0 : [-2.5, 0.5, -1.5][i % 3]} index={i} isMobile={isMobile} />
+          <QuestCard key={p.id} project={p} rotateOffset={isMobile ? 0 : [-2.5, 0.5, -1.5][i % 3]} index={i} isMobile={isMobile} visible={cardsVisible} />
         ))}
       </div>
 
@@ -114,7 +113,7 @@ export default function QuestLog() {
   )
 }
 
-function QuestCard({ project: p, rotateOffset, index, isMobile }: { project: Project; rotateOffset: number; index: number; isMobile?: boolean }) {
+function QuestCard({ project: p, rotateOffset, index, isMobile, visible }: { project: Project; rotateOffset: number; index: number; isMobile?: boolean; visible: boolean }) {
   const navigate = useNavigate()
   const status = STATUS_STYLE[p.status]
   return (
@@ -128,11 +127,12 @@ function QuestCard({ project: p, rotateOffset, index, isMobile }: { project: Pro
         borderRadius: 3,
         position: 'relative',
         cursor: 'pointer',
-        transform: `rotate(${rotateOffset}deg)`,
+        transform: visible ? `rotate(${rotateOffset}deg)` : `rotate(${rotateOffset}deg) translateY(24px)`,
+        opacity: visible ? 1 : 0,
         boxShadow: '0 6px 28px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,107,68,0.4)',
-        transition: `transform 0.3s ${index * 90}ms, box-shadow 0.3s`,
+        transition: `transform 0.5s ${index * 110}ms cubic-bezier(0.22,1,0.36,1), opacity 0.5s ${index * 110}ms, box-shadow 0.25s`,
       }}
-      onMouseEnter={e => { const el = e.currentTarget as HTMLDivElement; el.style.transform = 'rotate(0deg) translateY(-10px) scale(1.03)'; el.style.boxShadow = '0 16px 48px rgba(0,0,0,0.8), 0 0 20px rgba(255,154,77,0.3)' }}
+      onMouseEnter={e => { const el = e.currentTarget as HTMLDivElement; el.style.transform = 'rotate(0deg) translateY(-10px) scale(1.02)'; el.style.boxShadow = '0 16px 48px rgba(0,0,0,0.8), 0 0 0 1px rgba(139,107,68,0.8), 0 0 24px rgba(255,154,77,0.25)' }}
       onMouseLeave={e => { const el = e.currentTarget as HTMLDivElement; el.style.transform = `rotate(${rotateOffset}deg)`; el.style.boxShadow = '0 6px 28px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,107,68,0.4)' }}
     >
       <div style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', width: 26, height: 26, borderRadius: '50%', background: 'radial-gradient(circle at 35% 35%, #e03060, #B8324B)', border: '2px solid #8a1f33', boxShadow: '0 0 10px #B8324B88', zIndex: 2 }} />

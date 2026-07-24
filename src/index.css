@@ -187,6 +187,11 @@ body {
   50%       { transform: translateX(8%) scaleX(0.88) skewX(3deg); opacity: 1; }
 }
 
+@keyframes quest-detail-enter {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ============ Theme tooltips (Option A) ============ */
 .theme-label {
   position: relative;

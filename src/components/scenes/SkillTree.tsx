@@ -139,7 +139,7 @@ export default function SkillTree() {
       </div>
 
       {/* Constellation SVG */}
-      <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', opacity: inView ? 1 : 0, transition: 'opacity 0.8s', zIndex: 8 }}>
+      <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center', zIndex: 8 }}>
         <svg viewBox="0 0 1000 600" style={{ width: '90%', maxWidth: 1100, height: '70%', overflow: 'visible' }}>
           <defs>
             <filter id="sk-glow">
@@ -160,11 +160,12 @@ export default function SkillTree() {
               />
             )
           })}
-          {NODES.map(n => {
+          {NODES.map((n, ni) => {
             const color = CATEGORY_COLOR[n.category]
             const isCore = n.id === 'core'
+            const delay = isCore ? 0 : 80 + ni * 60
             return (
-              <g key={n.id} style={{ cursor: 'pointer' }}>
+              <g key={n.id} style={{ cursor: 'pointer', opacity: inView ? 1 : 0, transition: `opacity 0.5s ${delay}ms` }}>
                 {isCore && (
                   <circle cx={n.x} cy={n.y} r={50} fill="none" stroke={color} strokeWidth={0.5} opacity={0.25}>
                     <animate attributeName="r" values="46;54;46" dur="3s" repeatCount="indefinite" />
