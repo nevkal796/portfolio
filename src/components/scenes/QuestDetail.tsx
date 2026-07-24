@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useProjects } from '../../lib/useLiveData'
 import { useScrollReveal } from '../../lib/useScrollReveal'
@@ -58,6 +59,8 @@ export default function QuestDetail() {
   const location = useLocation()
   const projects = useProjects()
   const project = projects.find(p => p.id === id)
+
+  useEffect(() => { window.scrollTo(0, 0) }, [])
 
   const headerRef = useScrollReveal<HTMLDivElement>()
 
